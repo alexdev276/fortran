@@ -9,13 +9,15 @@ contains
     function create(lenarr) result(arr)
         implicit none
         integer, intent(in) :: lenarr
-        integer, dimension(lenarr) :: arr
+        integer, allocatable :: arr(:)
 
         integer :: i
 
+        allocate(arr(lenarr))
 
         print *, 'enter array elements into a line separated by spaces'
         read *, (arr(i), i = 1, lenarr)
+        deallocate(arr)
     end function create
 
     function dotask(arr, lenarr) result (resarr)
@@ -65,7 +67,7 @@ program task4
     implicit none
     integer :: comm, lenarr, temp_comm
     logical :: f, arrcreated
-    integer, dimension(10000) :: arr, temp_arr
+    integer, dimension(100) :: arr, temp_arr
 
     arrcreated = .false.
     f = .true.

@@ -28,6 +28,19 @@ contains
         arr(:, a3) = sum_vec(arr(:, a1), arr(:, a2), m)
     end subroutine sum_stolb
 
+    
+
+    subroutine apo()
+        integer :: qq(90), mas(3), q(7)
+        common /matrix/ qq, mas, q
+        mas(1) = 1000
+        mas(2) = 1000
+        mas(3) = 1000
+
+    end subroutine
+
+    
+
 end module funcs1
 
 
@@ -35,7 +48,7 @@ program task5
     use funcs1
     implicit none
 
-    integer :: n, m, i, j
+    integer :: n, m, i, j, r1, r2, a1, a2
 
     print *, '= enter matrix size into a line separated by space' 
     read *, n, m
@@ -54,6 +67,38 @@ program task5
 
     call pprint(n, m)
 
+    print *, '== 10th stolbec'
+
+
+    r1 = 1
+    r2 = 2
+    a1 = 1
+    a2 = 1
+    if (arr(r1, a1) > arr(r2, a2)) then
+        r1 = 2
+        r2 = 1
+    end if
+    do i = 1, n
+        do j = 1, m
+            if (arr(i, j) < arr(r1, a1)) then
+                r2 = r1
+                a2 = a1
+                r1 = i
+                a1 = j
+            else if (arr(i, j) > arr(r1, a1) .and. arr(i, j) < arr(r2, a2)) then
+                r2 = i
+                a2 = j
+            end if
+        end do
+    end do
+    
+    print *, '== indexes of minimal elements:'
+    print *, a1, a2
+
+    print *, 'dop zadanie'
+    call apo()
+    print *, arr(1, 10), arr(2, 10), arr(3, 10)
+    
 end program task5
 
 block data init
